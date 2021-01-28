@@ -1,118 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
+
 <head>
-	<link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script defer src="theme.js"></script>
+  <script defer src="neonlights.js"></script>
+  <link rel="stylesheet" href="style.css" />
   <link
     href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
     rel="stylesheet"
   />
-  <script defer src="theme.js"></script>
-
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Contact</title>
-	<style type='text/css'>
-
-
-		body
-		{
-			width: 100%;
-height: 100%;
-padding: 0px;
-margin: 0px;
-overflow-x: hidden;
+  <style type="text/css">
+    body{
+      
+      background-color: red; /* For browsers that do not support gradients */
+  background-image: linear-gradient(#696969,#DBD4B4,#E684AE);
+      
+    }
     
-
-			background-color: red; /* For browsers that do not support gradients */
-  background-image: linear-gradient(#CC95C0,#DBD4B4,#E684AE);
-		}
-		
-		main{
-			overflow: hidden;
-			padding: 0;
-			margin: 0;
-		}
-		section{
-			position: absolute;
-			left: 10%;
-			width: 75%;
-			height: 80vh;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			
-		}
-		section::before{
-			content: '';
-			position: absolute; 
-			bottom: 0;
-			width: 100%;
-			height: 50%;
-			
-			z-index: 1;
-			backdrop-filter: blur(5px);
-			border-top: 1px solid rgba(255,255,255,0.5);
-		} 
-		
-	ul{
-		position: relative;
-		display: flex;
-		z-index: 2;
-	}
-	ul li
-	{
-		position: relative;
-		list-style: none;
-		margin: 10px;
-	}
-	ul li b{
-		position: relative;
-		width: 78px;
-		height: 80px;
-		display: inline-block;
-		border-radius: 10px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		text-decoration: none;
-		color: #fff;
-		font-size: 2em; 
-		border:1px solid rgba(255,255,255,0.4);
-		border-right: 1px solid rgba(255,255,255,0.2);
-		border-bottom: 1px solid rgba(255,255,255,0.2);
-		box-shadow: 0 5px 45px rgba(0,0,0,0.1);
-		backdrop-filter: blur(2px);
-		transition: 0.5s;
-		overflow: hidden;
-	}
-ul li b:hover
-{
-	transform: translateY(-20px);
-}
-ul li b::before
-{
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 50px;
-	height: 100%;
-	background: rgba(255,255,255,0.5);
-	transform: skewX(45deg) translateX(150px);
-	transition: 0.5s;
-
-}
-ul li b:hover::before
-{
-	transform: skewX(45deg) translateX(-150px);
-}
-
-	</style>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-
+  </style>
 </head>
+
 <body>
-	  <nav class="navbar">
+  
+  <nav class="navbar">
     
     <ul class="navbar-nav">
       <li class="logo">
@@ -339,18 +251,70 @@ ul li b:hover::before
 
     </ul>
   </nav>
+
+  <main>  
+    <div class="container">
+    
+ 
+    <h1>WELCOME</h1>
+     </div>
+
+    <div class="card">
+               <div class="card-info">
+                <p style="font-size: 1.5rem; color: white;">Manipal Institute of Technology</p>
+                <p>📍 Manipal, Karnataka, India</p>
+                <p>🎓 Btech. in Electrical and Electronics Engineering</p>
+                <p>Minor in Embedded systems</p>
+            <div class="progress"></div>
+             </div>
+
+              <h2 class="date">2015-2019</h2>
+            </div>
+
+     <div class="card">
+              <div class="card-info">
+                <p style="font-size: 1.5rem; color: white;">FIITJEE</p>
+                <p>📍 Visakhaptnam, Andhra Preadesh, India</p>
+                <p>Intermediate (MPC)</p>          
+                <div class="progress"></div>
+              </div>
+              <p style="size: 1.5rem">2012-2013</p>
+            </div>
+      <div class="card">
+                <div class="card-info">
+                <p style="font-size: 1.5rem; color: white;">Bhashyam Public School</p>
+                <p>📍 Rajahmundry, Andhra Pradesh,India</p>
+                <p>10th Class</p>
+                <div class="progress"></div>
+              </div>
+              <p style="size: 1.5rem">2012-2013</p>
+            </div>
+          </div>
+
+          <div class="card">
+                <div class="card-info">
+                <p style="font-size: 1.5rem; color: white;">Bhashyam Public School</p>
+                <p>📍 Rajahmundry, Andhra Pradesh,India</p>
+                <p>10th Class</p>
+                <div class="progress"></div>
+              </div>
+              <p style="size: 1.5rem">2012-2013</p>
+            </div>
+          </div>
+          
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+  </main>
 </body>
-
-<main>
-	<section>
-	
-	<ul>
-		<li><b href="www.facebook.com"><i class="fa fa-facebook" aria-hidden="true"></i></b></li>
-		<li><b href="#"><i class="fa fa-instagram" aria-hidden="true"></i></b></li>
-		<li><b href="#"><i class="fa fa-twitter" aria-hidden="true"></i></b></li>
-		<li><b href="www.linkedin.com/in/anantharam-kalepu-587000107"><i class="fa fa-linkedin" aria-hidden="true"></i></b></li>			
-	</ul>
-	</section>
-</main>
-
 </html>
