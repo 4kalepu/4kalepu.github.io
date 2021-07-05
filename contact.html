@@ -1,118 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css" />
   <link
     href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
     rel="stylesheet"
   />
   <script defer src="theme.js"></script>
 
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Contact</title>
-	<style type='text/css'>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact</title>
+  <style type='text/css'>
 
-
-		body
-		{
-			width: 100%;
-height: 100%;
-padding: 0px;
-margin: 0px;
-overflow-x: hidden;
-    
-
-			background-color: red; /* For browsers that do not support gradients */
-  background-image: linear-gradient(#CC95C0,#DBD4B4,#E684AE);
-		}
-		
-		main{
-			overflow: hidden;
-			padding: 0;
-			margin: 0;
-		}
-		section{
-			position: absolute;
-			left: 10%;
-			width: 75%;
-			height: 80vh;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			
-		}
-		section::before{
-			content: '';
-			position: absolute; 
-			bottom: 0;
-			width: 100%;
-			height: 50%;
-			
-			z-index: 1;
-			backdrop-filter: blur(5px);
-			border-top: 1px solid rgba(255,255,255,0.5);
-		} 
-		
-	ul{
-		position: relative;
-		display: flex;
-		z-index: 2;
-	}
-	ul li
-	{
-		position: relative;
-		list-style: none;
-		margin: 10px;
-	}
-	ul li b{
-		position: relative;
-		width: 78px;
-		height: 80px;
-		display: inline-block;
-		border-radius: 10px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		text-decoration: none;
-		color: #fff;
-		font-size: 2em; 
-		border:1px solid rgba(255,255,255,0.4);
-		border-right: 1px solid rgba(255,255,255,0.2);
-		border-bottom: 1px solid rgba(255,255,255,0.2);
-		box-shadow: 0 5px 45px rgba(0,0,0,0.1);
-		backdrop-filter: blur(2px);
-		transition: 0.5s;
-		overflow: hidden;
-	}
-ul li b:hover
-{
-	transform: translateY(-20px);
+body,html {
+    background-image: linear-gradient(#CC95C0,#DBD4B4,#E684AE);
 }
-ul li b::before
-{
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 50px;
-	height: 100%;
-	background: rgba(255,255,255,0.5);
-	transform: skewX(45deg) translateX(150px);
-	transition: 0.5s;
-
+h1 {
+  text-align: center;
 }
-ul li b:hover::before
-{
-	transform: skewX(45deg) translateX(-150px);
+.social-menu ul {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+.social-menu ul li {
+    list-style: none;
+    margin: 0 10px;
+}
+.social-menu ul li .fa {
+    color: #000000;
+    font-size: 25px;
+    line-height: 50px;
+    transition: .5s;
+}
+.social-menu ul li .fa:hover {
+    color: #ffffff;
+}
+.social-menu ul li a {
+    position: relative;
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: white;
+    text-align: center;
+    transition: 0.5s;
+    transform: translate(0,0px);
+    box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.5);
+}
+.social-menu ul li a:hover {
+    transform: rotate(0deg) skew(0deg) translate(0, -10px);
+}
+.social-menu ul li:nth-child(1) a:hover {
+    background-color: #3b5999;
+}
+.social-menu ul li:nth-child(2) a:hover {
+    background-color: #55acee;
+}
+.social-menu ul li:nth-child(3) a:hover {
+    background-color: #e4405f;
+}
+.social-menu ul li:nth-child(4) a:hover {
+    background-color: #cd201f;
+}
+.social-menu ul li:nth-child(5) a:hover {
+    background-color: #0077B5;
 }
 
-	</style>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  </style>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 </head>
 <body>
-	  <nav class="navbar">
+  <nav class="navbar">
     
     <ul class="navbar-nav">
       <li class="logo">
@@ -206,7 +171,7 @@ ul li b:hover::before
       </li>
 
       <li class="nav-item">
-        <a href="Hobbies" class="nav-link">
+        <a href="project.html" class="nav-link">
           <svg
             aria-hidden="true"
             focusable="false"
@@ -230,7 +195,7 @@ ul li b:hover::before
               ></path>
             </g>
           </svg>
-          <span class="link-text">Hobbies</span>
+          <span class="link-text">Projects</span>
         </a>
       </li>
 
@@ -339,18 +304,23 @@ ul li b:hover::before
 
     </ul>
   </nav>
+
 </body>
 
 <main>
-	<section>
-	
-	<ul>
-		<li><b href="www.facebook.com"><i class="fa fa-facebook" aria-hidden="true"></i></b></li>
-		<li><b href="#"><i class="fa fa-instagram" aria-hidden="true"></i></b></li>
-		<li><b href="#"><i class="fa fa-twitter" aria-hidden="true"></i></b></li>
-		<li><b href="www.linkedin.com/in/anantharam-kalepu-587000107"><i class="fa fa-linkedin" aria-hidden="true"></i></b></li>			
-	</ul>
-	</section>
+
+<div class="social-menu">
+  
+  <ul>
+    <li><a href="https://www.facebook.com/kalepu.07/"><i class="fa fa-facebook"></i></a></li>
+    <li><a href="mailto:4kalepu@gmail.com"><i class="fa fa-envelope"></i></a></li>
+    <li><a href="https://www.instagram.com/4kalepu/"><i class="fa fa-instagram"></i></a></li>
+    <li><a href="https://www.linkedin.com/in/anantharam-kalepu-587000107/"><i class="fa fa-linkedin"></i></a></li>
+    <li><a href=""><i class="fa fa-github"></i></a></li>
+    
+
+  </ul>
+</div>
 </main>
 
 </html>

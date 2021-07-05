@@ -27,6 +27,7 @@
 html, body {
   background-color: black;
   font-family: 'Monoton', cursive;
+  margin=0;
 }
 
 h1 {
@@ -56,6 +57,7 @@ h3 {
 .container
 {
   height: 100%;
+  
   
   background-repeat: no-repeat;
   background-position: center;
