@@ -13,9 +13,7 @@
   right: 0;
   top: 30%;
 }
-body,html,main{
-  background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);;
-}
+
 
 .description, .link {
   font-family: 'Amatic SC', cursive;
@@ -29,7 +27,6 @@ body,html,main{
 .btn {
   border: none;
   display: block;
- 
   cursor: pointer;
   text-transform: uppercase;
   outline: none;
@@ -80,23 +77,28 @@ body,html,main{
 
 
 
-      html, body {
-  height: 100%;
-}
+      @import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
+      
 
 
 /*About Me*/
-
+body,html{
+     background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
+}
 .welcome {
-  background-image: linear-gradient(to top, #d9afd9 0%, #97d9e1 100%);
-  color:white;
+  
+  
   text-align:center;
   height:100%;
   width:100%;
   display:table;
+  margin: 0 auto;
+  position: absolute;
+
 }
 .welcome_txt{
   color:black;
+
   max-width: 600px;
   margin: 0 auto;
   display:table-cell;
@@ -105,14 +107,18 @@ body,html,main{
   
 }
 .welcome_txt h1{
+ 
   margin:50px;
-  font-family: Otomanopee One;
-  font-size: 120px;
+  font-family: 'Cedarville Cursive', cursive;
+  font-size: 100px;
+  
 }
 .welcome_txt p{
   margin:50px;
-  font-family: Segoe Script;
+font-family: 'Cedarville Cursive', cursive;
   font-size: 20px;
+  
+
 }
 
 .group:before,
