@@ -1,124 +1,144 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html height="100%">
-<head class="bgimg">
-    <title>Fetch Data From ThingSpeak</title>
-    <style type="text/css">
-    .bgimg {
-    background-image: url('https://thumbs.dreamstime.com/z/spanish-low-cost-airline-vueling-airbus-just-to-depart-spain-s-alicante-elche-airport-47666442.jpg');
-    height: 100%;
-    width: 100%;
-    position: absolute;
-}
-        .box{
-    width:100px;
-    height:100px;
-    left: 20%;
-    position: absolute;
-    background-color:#1e1e26;
-    border-radius: 90px;
-    box-shadow: 2px 10px 12px rgba(0,0,0,0.5);
-    display: flex;
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApiTesting-RPL</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    margin: 20px 10px;
-}
-.box2{
-    width:100px;
-    height:100px;
-    background-color:#1e1e26;
-    border-radius: 90px;
-    position: absolute;
-    left: 30%;
-    box-shadow: 2px 10px 12px rgba(0,0,0,0.5);
-    display: flex;
-
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    margin: 20px 10px;
-}
-.box2{
-    width:100px;
-    height:100px;
-    background-color:#1e1e26;
-    border-radius: 90px;
-    position: absolute;
-    left: 60%;
-    top: 30%;
-    box-shadow: 2px 10px 12px rgba(0,0,0,0.5);
-    display: flex;
-
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    margin: 20px 10px;
-}
-
-    </style>
-    <script type="text/javascript" src="jquery-1.12.1.min.js"></script>
-    <script type="text/javascript">
-
-        $(document).ready(function ()
-        {
-            GetData();
-        });
-
-        function GetData()
-        {
-            var url = 'https://api.thingspeak.com/channels/1557151/feeds.json?key=PX3V5LU7YPCYRGVD&results=1';
-            $.ajax
-            ({
-                url: url,
-                type: 'GET',
-                contentType: "application/json",
-                //dataType: "json",
-                //crossDomain: true,
-                success: function (data, textStatus, xhr) {
-                    $.each(data, function (i, item) {
-                        if (i == 'feeds') {
-                            var ubound = item.length;
-                            $('#txtField1').val(item[ubound - 1].field1);
-                        }
-                    });
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    alert(errorThrown);
-                }
-            });
-
-            setTimeout(GetData, 10000);
-        }
-    </script>
 </head>
-<body height="100%">
-    <div class="bgimg">
+<!-- Bootstrap Script -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<!-- Scroll Click -->
+<script>
+  $(document).ready(function(){
+    $("a").on('click', function(event) {
+      if (this.hash !== "") {
+        event.preventDefault();
+        var hash = this.hash;
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 800, function(){
+          window.location.hash = hash;
+        },'slow');
+      } // End if
+    });
+  });
+</script>
+<style>
+  @media (max-width: 767.98px) {
+    .title{
+      font-size: 15vw;
+    }
+    .main{
+      width: 18rem; 
+      height: 26rem; 
+      border-radius: 20px;
+    }
+    .led{
+      width: 18rem; 
+      border-radius: 20px;
+    }
+    .chart{
+      width:340px;
+    }
+    .btn-suhu{
+      display: '';
+    }
+  }
+
+  @media (min-width: 768px) {
+    .title{
+      font-size: 5vw;
+    }
+    .main{
+      width: 23rem; 
+      height: 26rem; 
+      border-radius: 20px;
+      margin-left: 60px;
+    }
+    .led{
+      width: 23rem; 
+      border-radius: 20px;
+      margin-left: 60px;
+    }
+    .chart{
+      margin-left:15%;
+    }
+    .btn-suhu{
+      display: none;
+    }
+  }
+
+</style>
+<body class="bg-light">
+    <!-- main -->
+    <div class="container mt-3 bg-light" id="app">
+
+<img id="rotater" onclick="rotate(this)" src="https://upload.wikimedia.org/wikipedia/en/e/e0/Iron_Man_bleeding_edge.jpg"/>
+
+         <img src="http://placekitten.com/100/100/" data-rotate="90">
+<img src="http://placekitten.com/110/110/" data-rotate="45">
+
+
+              <h2 class="card-title">Data Filed 1</h2>
+              <h1 class="display-1">{{data.field1}}</h1>
+             
+        
+        
+              <h2 class="card-title">Data Filed 2</h2>
+              <h1 class="display-1">{{data.field2}}</h1>
+            
+              <h2 class="card-title">Data Filed 3</h2>
+              <h1 class="display-1">{{data.field3}}</h1>
+            
+              <h2 class="card-title">Data Filed 4</h2>
+              <h1 class="display-1">{{data.field4}}</h1>
+            
+  </div>
+   
+
+    <!-- vue script -->
+    <script>
+           let rotateAngle = 90;
+
+function rotate(image) {
+  image.setAttribute("style", "transform: rotate(" + rotateAngle + "deg)");
+  rotateAngle = rotateAngle + {data.field1};
+    </script>
+
     
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data () {
+                return {
+                interval: null,
+                data: null
+                }
+            },
+            mounted () {
+                // get data every 100ms
+                this.interval = setInterval(() => {
+                    axios
+                    .get('https://api.thingspeak.com/channels/1557151/feeds.json?results=2')
+                    .then(response => (
+                        allData = response.data.feeds,
+                        latestData =  allData[allData.length-1],
+                        this.data = latestData
+                    ))
+                }, 100 );
+            }
+        })
+     
 
-<li class="item-a">
-      
-        <div class="box">
-        <p style="font-size: 1rem; color: white; font-weight: 500;">Cabin Temp</p>
-        <tr><td>Cabin Temp:</td><td><input id="txtField1" type="text" /></td><td></td></tr>
-        </div>
-        </li>
-       <div class="box2">
-        <p style="font-size: 1rem; color: white; font-weight: 500;">Fuel Temp</p>
-        <tr><td>Fuel Temp:</td><td><input id="txtField1" type="text" /></td><td></td></tr>
-        </div>
-        </li>
 
-        <div class="box3">
-        <p style="font-size: 1rem; color: white; font-weight: 500;">Humidity</p>
-        <tr><td>Humidity:</td><td><input id="txtField1" type="text" /></td><td></td></tr>
-        </div>
-        </li>
-
-</div>
+    
+    </script>
 </body>
 </html>
-
