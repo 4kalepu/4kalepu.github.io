@@ -73,15 +73,21 @@
     }
   }
 
+  #img-rotate{
+    display: inline-block;
+    margin-left: 200px;
+    margin-bottom: 200px;
+    margin-top: 80px;
+
+  }
+
 </style>
 <body class="bg-light">
+
     <!-- main -->
     <div class="container mt-3 bg-light" id="app">
 
-<img id="rotater" onclick="rotate(this)" src="https://upload.wikimedia.org/wikipedia/en/e/e0/Iron_Man_bleeding_edge.jpg"/>
-
-         <img src="http://placekitten.com/100/100/" data-rotate="90">
-<img src="http://placekitten.com/110/110/" data-rotate="45">
+         
 
 
               <h2 class="card-title">Data Filed 1</h2>
@@ -99,21 +105,34 @@
               <h1 class="display-1">{{data.field4}}</h1>
             
   </div>
+
+
+  <div id="img-rotate">
+<img id="rotater" src="https://upload.wikimedia.org/wikipedia/en/e/e0/Iron_Man_bleeding_edge.jpg"/>
+</div>
    
 
     <!-- vue script -->
-    <script>
-           let rotateAngle = 90;
-
-function rotate(image) {
-  image.setAttribute("style", "transform: rotate(" + rotateAngle + "deg)");
-  rotateAngle = rotateAngle + {data.field1};
-    </script>
-
-    
+       
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+      const imgObj=document.getElementById('img-rotate')
+      const getApiData = async(mountedObj)=> {
+        const resp= await (axios.get('https://api.thingspeak.com/channels/1557151/feeds.json?results=2'));
+        allData = resp.data.feeds,
+        latestData =  allData[allData.length-1],
+        mountedObj.data = latestData
+        rotateImage(mountedObj.data.field4);
+        
+      }
+      function rotateImage(rotateAngle){
+        //imgObj.css('transform','rotate(' + rotateAngle + 'deg)');
+        imgObj.style = `transform: rotate(${rotateAngle}deg)`;
+        console.log('rotateAngle :' ,rotateAngle)
+      }
+
+
         new Vue({
             el: '#app',
             data () {
@@ -122,23 +141,20 @@ function rotate(image) {
                 data: null
                 }
             },
+
+
             mounted () {
                 // get data every 100ms
                 this.interval = setInterval(() => {
-                    axios
-                    .get('https://api.thingspeak.com/channels/1557151/feeds.json?results=2')
-                    .then(response => (
-                        allData = response.data.feeds,
-                        latestData =  allData[allData.length-1],
-                        this.data = latestData
-                    ))
-                }, 100 );
+                  getApiData(this);
+                  }, 1000 );
             }
         })
      
-
+      
 
     
     </script>
+
 </body>
 </html>
