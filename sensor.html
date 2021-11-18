@@ -67,18 +67,23 @@
 <div id="app">
 
  <div class="flex-container">
-               <h2 id="rcorners4" style="margin-right: 150px ">Cabin Temeperature <br> {{data.field1}}</h2>
-               <h2  id="rcorners4" style="margin-right: 150px">Fuel Temp <br>{{data.field1}}</h2>
-               <h2  id="rcorners4">Humidity <br> {{data.field3}}</h2>
+               <h2 id="rcorners4" style="margin-right: 150px ">Cabin Temeperature <br> {{data.field2}}</h2>
+               <h2  id="rcorners4" style="margin-right: 150px">Fuel Temp <br>{{data.field4}}</h2>
+               <h2  id="rcorners4">Humidity <br> {{data.field6}}</h2>
              
  </div>
 
  <div class="flex-container">
-              <h2  id="rcorners4" style="margin-right: 150px">Brake</h2>
-              <h2  id="rcorners4">Accerlometer <br>{{data.field4}}</h2>
+              <h2  id="rcorners4" style="margin-right: 150px">Brake<br>{{data.field3}}</h2>
+              <h2  id="rcorners4" style="margin-right: 150px">Accerlometer <br>{{data.field5}}</h2>
+              <h2  id="rcorners4" style="margin-right: 150px">LDR<br>{{data.field1}}</h2>
+
+              
  </div>
  
 </div>   
+
+
  
 <div id="img-rotate">
  <img class="center" id="rotater" src="img/flight.png">
@@ -94,7 +99,7 @@
         allData = resp.data.feeds,
         latestData =  allData[allData.length-1],
         mountedObj.data = latestData
-        rotateImage(mountedObj.data.field4);
+        rotateImage(mountedObj.data.field5);
         
       }
       function rotateImage(rotateAngle){
