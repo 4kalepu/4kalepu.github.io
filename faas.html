@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinScale | Finance as a Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Corporate Calm -->
+    <!-- Application Structure Plan: The SPA is structured as a logical user journey. It starts with a high-level value proposition in the Hero section, educates the user on the core concept in 'About FaaS' using an interactive chart for comparison, details the offerings in an interactive 'Services' tab section to prevent clutter, builds trust in 'Why Us' and 'Process' sections, and finally drives conversion in the 'Contact' section. This top-down, interactive approach guides potential clients from awareness to consideration and action, making complex service information easily digestible. -->
+    <!-- Visualization & Content Choices: 1. FaaS vs. In-house Comparison (About Section) -> Goal: Compare -> Viz: Interactive Bar Chart -> Interaction: Buttons to switch data view (Cost, Scalability, Expertise) and hover tooltips. -> Justification: A dynamic chart provides a powerful, data-driven visual argument for FaaS over a traditional model, making the benefits tangible. -> Library: Chart.js. 2. Service Details (Services Section) -> Goal: Organize & Inform -> Presentation: Tabbed Interface -> Interaction: Clicking a service tab reveals its description. -> Justification: Tabs present a large amount of information cleanly, allowing users to explore services at their own pace without overwhelming them. -> Method: Vanilla JS. 3. Client Process (Process Section) -> Goal: Inform -> Presentation: Visual Flow Diagram -> Interaction: Hover effects on each step. -> Justification: A visual timeline is more engaging and easier to understand than a text list, clearly outlining the client journey. -> Method: HTML/Tailwind. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #2D3748;
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #3B82F6;
+            transition: width 0.3s ease;
+        }
+        .nav-link.active::after, .nav-link:hover::after {
+            width: 100%;
+        }
+        .service-tab.active {
+            background-color: #3B82F6;
+            color: white;
+        }
+        .process-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -2.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #9CA3AF;
+        }
+        @media (max-width: 1023px) {
+            .process-step:not(:last-child)::after {
+                content: '↓';
+                right: 50%;
+                top: auto;
+                bottom: -2.5rem;
+                transform: translateX(50%);
+            }
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="header" class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center max-w-7xl">
+            <a href="#" class="text-2xl font-bold text-gray-800">FinScale</a>
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About FaaS</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#why-us" class="nav-link">Why Us</a>
+                <a href="#process" class="nav-link">Process</a>
+            </div>
+            <a href="#contact" class="hidden lg:block bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
+                Free Consultation
+            </a>
+            <button id="mobile-menu-button" class="lg:hidden text-gray-700 focus:outline-none">
+                <span class="text-3xl">☰</span>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden lg:hidden">
+            <a href="#home" class="block text-center py-2 px-4 text-sm hover:bg-gray-200">Home</a>
+            <a href="#about" class="block text-center py-2 px-4 text-sm hover:bg-gray-200">About FaaS</a>
+            <a href="#services" class="block text-center py-2 px-4 text-sm hover:bg-gray-200">Services</a>
+            <a href="#why-us" class="block text-center py-2 px-4 text-sm hover:bg-gray-200">Why Us</a>
+            <a href="#process" class="block text-center py-2 px-4 text-sm hover:bg-gray-200">Process</a>
+            <div class="p-4">
+                 <a href="#contact" class="block w-full text-center bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg shadow-md">
+                    Free Consultation
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="min-h-[80vh] flex items-center bg-white">
+            <div class="container mx-auto px-6 py-20 text-center max-w-7xl">
+                <h1 class="text-4xl md:text-6xl font-bold text-gray-800 leading-tight mb-4">Strategic Finance, On-Demand</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">We provide scalable, expert-led financial services—from bookkeeping to CFO advisory—so you can focus on what you do best: growing your business.</p>
+                <a href="#contact" class="bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-xl transition-transform duration-300 hover:scale-105 inline-block">
+                    Unlock Your Growth Potential
+                </a>
+            </div>
+        </section>
+
+        <section id="about" class="py-20">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">What is Finance as a Service (FaaS)?</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">This section introduces the modern financial model we champion. Finance as a Service (FaaS) is a flexible, cost-effective alternative to a traditional in-house finance team. It combines expert professionals, streamlined processes, and cutting-edge technology into a single, subscription-based service. Explore the chart below to see how FaaS provides superior value by allowing you to scale your financial operations precisely when you need to.</p>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                     <div class="text-center mb-6">
+                        <div id="chart-controls" class="inline-flex rounded-lg shadow-sm" role="group">
+                            <button type="button" data-metric="cost" class="chart-control-btn active bg-blue-500 text-white rounded-l-lg px-4 py-2 font-medium border border-blue-500">Cost Effectiveness</button>
+                            <button type="button" data-metric="scalability" class="chart-control-btn bg-white text-gray-700 px-4 py-2 font-medium border-t border-b border-gray-200 hover:bg-gray-50">Scalability</button>
+                            <button type="button" data-metric="expertise" class="chart-control-btn bg-white text-gray-700 rounded-r-lg px-4 py-2 font-medium border border-gray-200 hover:bg-gray-50">Access to Expertise</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="faasComparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="py-20 bg-white">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Suite of Services</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">We offer a comprehensive range of financial solutions tailored to your business stage and needs. This section details our core service areas. Click on each service to learn how our expert teams can support your financial operations, from foundational bookkeeping to high-level strategic guidance, ensuring you have the right support at every step of your journey.</p>
+                </div>
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="md:w-1/3 flex flex-col space-y-4">
+                        <button class="service-tab text-left p-4 rounded-lg font-semibold transition-all duration-300 active" data-service="transactional">
+                            <span class="text-2xl mr-3">🗂️</span> Transactional Services
+                        </button>
+                        <button class="service-tab text-left p-4 rounded-lg font-semibold transition-all duration-300" data-service="fpanda">
+                            <span class="text-2xl mr-3">📈</span> Financial Planning & Analysis
+                        </button>
+                        <button class="service-tab text-left p-4 rounded-lg font-semibold transition-all duration-300" data-service="technical">
+                            <span class="text-2xl mr-3">🛠️</span> Technical Accounting & Clean-Up
+                        </button>
+                        <button class="service-tab text-left p-4 rounded-lg font-semibold transition-all duration-300" data-service="cfo">
+                           <span class="text-2xl mr-3">🧠</span> CFO Advisory Services
+                        </button>
+                        <button class="service-tab text-left p-4 rounded-lg font-semibold transition-all duration-300" data-service="audit">
+                            <span class="text-2xl mr-3">🛡️</span> Audit Support
+                        </button>
+                    </div>
+                    <div class="md:w-2/3 bg-gray-50 p-8 rounded-2xl shadow-inner min-h-[300px]">
+                        <div id="service-content">
+                            <div class="service-panel active" data-service="transactional">
+                                <h3 class="text-2xl font-bold mb-4">Bookkeeping & Controller Level Compliance</h3>
+                                <p class="text-gray-600">We handle all your day-to-day accounting needs, from accounts payable and receivable to month-end close. Our controller-level oversight ensures your books are always accurate and compliant with the latest regulations, giving you a solid foundation for confident financial decision-making.</p>
+                            </div>
+                            <div class="service-panel hidden" data-service="fpanda">
+                                <h3 class="text-2xl font-bold mb-4">Strategic Financial Planning & Analysis</h3>
+                                <p class="text-gray-600">We go beyond the numbers to provide forward-looking financial analysis. Our team will help you develop budgets, forecasts, and key performance indicators (KPIs) to track your progress, identify opportunities, and make informed strategic decisions that drive growth.</p>
+                            </div>
+                            <div class="service-panel hidden" data-service="technical">
+                                <h3 class="text-2xl font-bold mb-4">Complex Accounting Solutions</h3>
+                                <p class="text-gray-600">Our experts can tackle even the most complex accounting challenges. Whether you're dealing with revenue recognition, equity accounting, or preparing for a new standard, we ensure your financial statements are accurate and compliant. We also offer "clean-up" services to get your books in order.</p>
+                            </div>
+                            <div class="service-panel hidden" data-service="cfo">
+                                <h3 class="text-2xl font-bold mb-4">Guidance from Experienced CFOs</h3>
+                                <p class="text-gray-600">Get the benefit of a high-level financial executive without the full-time cost. Our fractional CFOs provide strategic guidance on everything from fundraising and M&A to cash flow management and profitability analysis, acting as a true partner in your success.</p>
+                            </div>
+                             <div class="service-panel hidden" data-service="audit">
+                                <h3 class="text-2xl font-bold mb-4">Seamless Audit Preparation</h3>
+                                <p class="text-gray-600">We'll help you prepare for a financial audit, ensuring that all your documentation is in order and your team is ready for the process. We work directly with your auditors to make the process as smooth and efficient as possible, saving you time and stress.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-us" class="py-20">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Why Partner with FinScale?</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">Choosing the right financial partner is crucial for your success. In this section, we highlight the key differentiators that make us the ideal choice for ambitious companies. We are more than a service provider; we are an extension of your team, dedicated to empowering your growth with expertise, technology, and scalable solutions.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                        <h3 class="text-xl font-bold mb-3">Expert Team</h3>
+                        <p class="text-gray-600">Access a collective of seasoned accountants, analysts, and CFOs with deep industry experience.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                        <h3 class="text-xl font-bold mb-3">Tech-Powered</h3>
+                        <p class="text-gray-600">We leverage the latest fintech stack to provide real-time data, automation, and actionable insights.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                        <h3 class="text-xl font-bold mb-3">Scalable Solutions</h3>
+                        <p class="text-gray-600">Our services grow with you. Pay only for what you need, when you need it, from startup to enterprise.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+                        <h3 class="text-xl font-bold mb-3">Cost-Effective</h3>
+                        <p class="text-gray-600">Get Fortune 500-level financial expertise at a fraction of the cost of building an in-house team.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="py-20 bg-white">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Collaborative Process</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">We believe in a transparent and collaborative partnership. This section visually outlines our streamlined, four-step process for onboarding and supporting your business. Our goal is to ensure a seamless integration with your team and provide continuous value, transforming your finance function into a strategic asset for growth.</p>
+                </div>
+                <div class="flex flex-col lg:flex-row justify-center items-center gap-16 lg:gap-20">
+                    <div class="process-step text-center relative w-48">
+                        <div class="bg-blue-100 text-blue-600 text-2xl font-bold w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">1</div>
+                        <h3 class="font-semibold text-lg">Discovery</h3>
+                        <p class="text-sm text-gray-500">We learn about your business, challenges, and goals.</p>
+                    </div>
+                    <div class="process-step text-center relative w-48">
+                        <div class="bg-blue-100 text-blue-600 text-2xl font-bold w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">2</div>
+                        <h3 class="font-semibold text-lg">Custom Plan</h3>
+                        <p class="text-sm text-gray-500">We design a tailored service package for your specific needs.</p>
+                    </div>
+                    <div class="process-step text-center relative w-48">
+                        <div class="bg-blue-100 text-blue-600 text-2xl font-bold w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">3</div>
+                        <h3 class="font-semibold text-lg">Onboarding</h3>
+                        <p class="text-sm text-gray-500">We seamlessly integrate with your team and systems.</p>
+                    </div>
+                    <div class="process-step text-center relative w-48">
+                        <div class="bg-blue-100 text-blue-600 text-2xl font-bold w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">4</div>
+                        <h3 class="font-semibold text-lg">Growth & Support</h3>
+                        <p class="text-sm text-gray-500">We provide ongoing insights and adapt as you scale.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20">
+            <div class="container mx-auto px-6 max-w-4xl">
+                 <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Ready to Scale Your Finances?</h2>
+                        <p class="text-lg text-gray-600">Let's talk about how FinScale can help your business achieve its financial goals. Fill out the form below for a free, no-obligation consultation with one of our experts.</p>
+                    </div>
+                    <form>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block text-gray-700 font-semibold mb-2">Full Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-700 font-semibold mb-2">Email Address</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 font-semibold mb-2">How can we help?</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg px-8 py-3 rounded-lg shadow-lg transition-transform duration-300 hover:scale-105">
+                                Request Consultation
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white">
+        <div class="container mx-auto px-6 py-8 text-center max-w-7xl">
+            <p>&copy; 2025 FinScale. All Rights Reserved.</p>
+            <p class="text-sm text-gray-400 mt-2">Empowering Growth Through Financial Excellence.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                         mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+
+            const sections = document.querySelectorAll('section');
+            const header = document.getElementById('header');
+            const headerHeight = header.offsetHeight;
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - headerHeight - 50) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                if (window.scrollY > 50) {
+                    header.classList.add('py-2');
+                    header.classList.remove('py-4');
+                } else {
+                    header.classList.add('py-4');
+                    header.classList.remove('py-2');
+                }
+            });
+
+            const serviceTabs = document.querySelectorAll('.service-tab');
+            const servicePanels = document.querySelectorAll('.service-panel');
+
+            serviceTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const service = tab.dataset.service;
+
+                    serviceTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    servicePanels.forEach(panel => {
+                        if (panel.dataset.service === service) {
+                            panel.classList.remove('hidden');
+                            panel.classList.add('active');
+                        } else {
+                            panel.classList.add('hidden');
+                            panel.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            const chartData = {
+                cost: {
+                    labels: ['FaaS', 'Traditional In-House'],
+                    datasets: [{
+                        label: 'Annual Cost',
+                        data: [60, 100],
+                        backgroundColor: ['#3B82F6', '#9CA3AF'],
+                        borderColor: ['#2563EB', '#6B7280'],
+                        borderWidth: 1
+                    }]
+                },
+                scalability: {
+                    labels: ['FaaS', 'Traditional In-House'],
+                    datasets: [{
+                        label: 'Ability to Scale',
+                        data: [95, 40],
+                        backgroundColor: ['#3B82F6', '#9CA3AF'],
+                        borderColor: ['#2563EB', '#6B7280'],
+                        borderWidth: 1
+                    }]
+                },
+                expertise: {
+                    labels: ['FaaS', 'Traditional In-House'],
+                    datasets: [{
+                        label: 'Access to Specialists',
+                        data: [90, 50],
+                        backgroundColor: ['#3B82F6', '#9CA3AF'],
+                        borderColor: ['#2563EB', '#6B7280'],
+                        borderWidth: 1
+                    }]
+                }
+            };
+            
+            const chartTitles = {
+                cost: 'Average Annual Cost (Relative)',
+                scalability: 'Scalability & Flexibility Score (out of 100)',
+                expertise: 'Access to Specialist Expertise Score (out of 100)'
+            };
+
+            const ctx = document.getElementById('faasComparisonChart').getContext('2d');
+            let myChart = new Chart(ctx, {
+                type: 'bar',
+                data: chartData.cost,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: chartTitles.cost,
+                            font: { size: 16 }
+                        },
+                         tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 110,
+                        }
+                    }
+                }
+            });
+
+            const chartControls = document.querySelectorAll('.chart-control-btn');
+            chartControls.forEach(button => {
+                button.addEventListener('click', () => {
+                    const metric = button.dataset.metric;
+                    
+                    chartControls.forEach(btn => {
+                        btn.classList.remove('active', 'bg-blue-500', 'text-white');
+                        btn.classList.add('bg-white', 'text-gray-700');
+                    });
+                    
+                    button.classList.add('active', 'bg-blue-500', 'text-white');
+                    button.classList.remove('bg-white', 'text-gray-700');
+
+                    myChart.data = chartData[metric];
+                    myChart.options.plugins.title.text = chartTitles[metric];
+                    myChart.update();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
